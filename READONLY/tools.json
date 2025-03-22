@@ -1,0 +1,29 @@
+[
+    {
+    "type": "function",
+    "function": {
+        "name": "report",
+        "description": "Terminates current session. Returns your final message's content to the parent of your current instance.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+            },
+            "required": []
+        }
+    }
+},
+{
+    "type": "function",
+    "function": {
+        "name": "get_current_time",
+        "description": "Returns the current time in yyyy-mm-dd hh:mm:ss format",
+        "parameters": {
+            "type": "object",
+            "properties": {
+            },
+            "required": []
+        }
+    }
+}
+
+]
