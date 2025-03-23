@@ -83,7 +83,7 @@ while (isActive and len(messages) <  max_conversation_length):
 
     # try to parse the response
     try:
-        tool_calls = chat_response.choices[0].message.tool_calls
+        tool_calls = chat_response.choices[0].message.tool_call
         if (tool_calls is None):
             messages.append({"role": "assistant", "content": chat_response.choices[0].message.content})
         else:
@@ -91,12 +91,10 @@ while (isActive and len(messages) <  max_conversation_length):
     except:
         isActive = False
         isError = True
+        print("Error")
         continue
 
-    with open('object.pkl', 'wb') as f:
-        pickle.dump(chat_response, f)
-
-
+    # error occurs here as tool_calls is not json serializable
     # convert messages to json file, so it can be fed to tool_call functions:
     with open(message_json_location, 'w') as f:
         json.dump(messages, f)
@@ -104,7 +102,7 @@ while (isActive and len(messages) <  max_conversation_length):
     # early exit if no tool calls are required
     if (tool_calls is None):
         continue
-
+        
     # make tool calls
     for tool_call in tool_calls:
         tool_function_name = tool_call.function.name
