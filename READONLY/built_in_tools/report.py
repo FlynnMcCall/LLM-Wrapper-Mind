@@ -5,14 +5,8 @@ import sys
 import datetime
 import pickle
 
-message_json_location = "chat_history/" + sys.argv[1] + "_chatlog.json"
 message_pickle_location = "chat_history/" + sys.argv[1] + "_chatlog.pkl"
 final_report_location = "instance_reports/" + sys.argv[1] + ".report"
-
-"""
-with open(message_json_location, 'r') as f:
-    messages = json.load(f)
-"""
 
 with open(message_pickle_location, 'rb') as f:
     messages = pickle.load(f)
@@ -34,10 +28,6 @@ with open(final_report_location, 'w') as f:
                 f.write("ID " + sys.argv[1] + "\nSelf-terminated session at " + str(datetime.datetime.now()) + "\n\n" + "Error, no message provided")
             break
 
-"""
-with open(message_json_location, 'w') as f:
-    json.dump(messages, f)
-"""
 
 with open(message_pickle_location, 'wb') as f:
     messages = pickle.dump(messages, f)

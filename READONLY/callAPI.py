@@ -59,25 +59,16 @@ isActive = True
 isError = False
 isCallRep = False
 
-message_json_location = "chat_history/" + instance_id + "_chatlog.json"
 message_pickle_location = "chat_history/" + instance_id + "_chatlog.pkl"
 
-# save current messages to json
-"""
-with open(message_json_location, 'w') as f:
-    json.dump(messages, f)
-"""
+# save current messages to pkl
 with open(message_pickle_location, 'wb') as f:
     pickle.dump(messages, f)
 
 
 while (isActive and len(messages) <  max_conversation_length):
 
-    # load message history from json file
-    """
-    with open(message_json_location, 'r') as f:
-        messages = json.load(f)
-    """
+    # load message history from pkl (function calls update pkl file)
     with open(message_pickle_location, 'rb') as f:
         messages = pickle.load(f)
 
@@ -97,22 +88,13 @@ while (isActive and len(messages) <  max_conversation_length):
     try:
         tool_calls = chat_response.choices[0].message.tool_calls
         messages.append({"role": "assistant", "content": chat_response.choices[0].message.content, "tool_calls": tool_calls})
-        #if (tool_calls is None):
-            #messages.append({"role": "assistant", "content": chat_response.choices[0].message.content})
-        #else:
-            #messages.append({"role": "assistant", "content": chat_response.choices[0].message.content, "tool_calls": tool_calls})
     except:
         isActive = False
         isError = True
         print("tool_call handling error")
         continue
 
-    # error occurs here as tool_calls is not json serializable
-    # convert messages to json file, so it can be fed to tool_call functions:
-    """
-    with open(message_json_location, 'w') as f:
-        json.dump(messages, f)
-    """
+    # convert messages to pkl file, so it can be fed to tool_call functions:
     with open(message_pickle_location, 'wb') as f:
         pickle.dump(messages, f)
 
@@ -146,10 +128,7 @@ if (len(messages) ==  max_conversation_length):
         {
             "role": "system", 
             "content": "Auto-terminated session at " + str(datetime.datetime.now()) + "\nmax_conversation_length exceeded: " + max_conversation_length + "\n"})
-    """
-    with open(message_json_location, 'w') as f:
-        json.dump(messages, f)
-    """
+    
     with open(message_pickle_location, 'wb') as f:
         pickle.dump(messages, f)
     
