@@ -57,7 +57,7 @@ max_conversation_length = parse_int(sys.argv[3], 20)
 
 isActive = True
 isError = False
-isCallTerm = False
+isCallRep = False
 
 message_json_location = "chat_history/" + instance_id + "_chatlog.json"
 
@@ -79,26 +79,30 @@ while (isActive and len(messages) <  max_conversation_length):
     except:
         isActive = False
         isError = True
+        print("chat_completion_request error\n")
         continue
 
     # try to parse the response
     try:
-        tool_calls = chat_response.choices[0].message.tool_call
+        tool_calls = chat_response.choices[0].message.tool_calls
         if (tool_calls is None):
             messages.append({"role": "assistant", "content": chat_response.choices[0].message.content})
         else:
+            print(tool_calls)
             messages.append({"role": "assistant", "content": chat_response.choices[0].message.content, "tool_calls": tool_calls})
     except:
         isActive = False
         isError = True
-        print("Error")
+        print("tool_call handling error")
         continue
 
     # error occurs here as tool_calls is not json serializable
     # convert messages to json file, so it can be fed to tool_call functions:
+    
     with open(message_json_location, 'w') as f:
         json.dump(messages, f)
     
+
     # early exit if no tool calls are required
     if (tool_calls is None):
         continue
@@ -110,7 +114,7 @@ while (isActive and len(messages) <  max_conversation_length):
         if tool_function_name == "report":
             os.system("python built_in_tools/report.py " + instance_id + " " + tool_call.id)
             isActive = False
-            isCallTerm = True
+            isCallRep = True
 
         if tool_function_name == "get_current_time":
             os.system("python built_in_tools/get_current_time.py " + instance_id + " " + tool_call.id)
