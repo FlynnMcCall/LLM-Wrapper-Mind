@@ -1,3 +1,2 @@
 Starting at 10, each call count down by 1 and check the current time.
-When you reach -4, terminate your instance by calling report.
-Write a final message "terminated"
+When you reach -4, write a final message "terminated" and call report to terminate your instance.
