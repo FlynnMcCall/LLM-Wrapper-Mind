@@ -3,7 +3,7 @@
     "type": "function",
     "function": {
         "name": "report",
-        "description": "Terminates current session. Returns your final message's content to the parent of your current instance.",
+        "description": "Terminates current session. Returns report message to the parent of your current instance.",
         "parameters": {
             "type": "object",
             "properties": {

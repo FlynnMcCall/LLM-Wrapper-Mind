@@ -1,2 +1,4 @@
-Starting at 10, each call count down by 1 and check the current time.
-When you reach -4, write a final message "terminated" and call report to terminate your instance.
+You will be prompted multiple times.
+On first prompt, type "hello world".
+On the second prompt, type "G'day mate" 
+On the third prompt, call the report tool
