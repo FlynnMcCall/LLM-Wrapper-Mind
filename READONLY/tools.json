@@ -24,6 +24,70 @@
             "required": []
         }
     }
+},
+{
+    "type": "function",
+    "function": {
+        "name": "write_file",
+        "description": "Enters write mode. Creates or clears the target file. Your responses will be copied into the file verbatim, until close_file is called.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type" : "string",
+                    "description" : "path of file to write to"
+                }
+            },
+            "required": ["file_path"]
+        }
+    }
+},
+{
+    "type": "function",
+    "function": {
+        "name": "close_file",
+        "description": "Exits write mode.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+            },
+            "required": []
+        }
+    }
+},
+{
+    "type": "function",
+    "function": {
+        "name": "read_file",
+        "description": "Writes contents of specified file to chat.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type" : "string",
+                    "description" : "path of file to read from"
+                }
+            },
+            "required": ["file_path"]
+        }
+    }
+},
+{
+    "type": "function",
+    "function": {
+        "name": "run",
+        "description": "Writes the specified command to the terminal.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "type" : "string",
+                    "description" : "command to run to terminal"
+                }
+            },
+            "required": ["command"]
+        }
+    }
 }
 
 ]

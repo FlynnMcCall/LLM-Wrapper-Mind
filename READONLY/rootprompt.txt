@@ -1,4 +1,5 @@
 You will be prompted multiple times.
-On first prompt, type "hello world".
+On first prompt, type "hello world" and query the time.
+DO NOT CALL THE read_file, write_file or run tools as they are not implemented yet.
 On the second prompt, type "G'day mate" 
 On the third prompt, call the report tool

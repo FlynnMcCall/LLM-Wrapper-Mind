@@ -1,5 +1,5 @@
 #
-# Usage: python callAPI.py PROMPTFILE TOOLFILE MAXMESSAGELENGTH
+# Usage: python callAPI.py PROMPTFILE TOOLFILE MAXMESSAGELENGTH ID
 #
 import pickle
 import json
@@ -57,12 +57,15 @@ def report(messages, tool_call,  tools, instance_id):
         
 
 
-
-
-
-
-instance_id = "k1"
 chat_start_time = datetime.datetime.now()
+
+# use a hash function as instance ID
+# pray for no collisions lol
+instance_id = str(hash(str(chat_start_time)))
+try:
+    instance_id = sys.argv[4]
+except:
+    print("ID " + instance_id + " generated\n")
 
 with open(sys.argv[1], "r") as promptfile:
     prompt = promptfile.read()
@@ -127,15 +130,20 @@ while (isActive and len(messages) <  max_conversation_length):
                 report(messages=messages, tool_call=tool_call, tools=tools, instance_id=instance_id)
                 isActive = False
                 isCallRep = True
+            
+            if (os.path.isfile("built_in_tools/" + tool_function_name + ".py")):
+                os.system("python built_in_tools/" + tool_function_name + ".py " + instance_id + " " + tool_call.id)
+            else:
+                print ("built_in_tools/" + tool_function_name + ".py could not be found")
 
-            if tool_function_name == "get_current_time":
-                os.system("python built_in_tools/get_current_time.py " + instance_id + " " + tool_call.id)
-        
     
     while (yetread < len(messages)):
-        print(messages[yetread]["role"])
-        print(messages[yetread]["content"])
-        print("")
+        print("\nrole: " + str(messages[yetread]["role"]) + "")
+        print("Content: \n" + str(messages[yetread]["content"]))
+        if ( hasattr(messages[yetread], "tool_calls")):
+            print("Tool calls: \n")
+            for tool_call in messages[yetread]["tool_calls"]:
+                print("\t" + str(tool_call) + "\n")
 
         yetread += 1
 
