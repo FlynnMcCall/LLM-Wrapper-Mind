@@ -1,0 +1,4 @@
+- report function returns incorrect values
+- implement file manipulation tools (how will they communicate to the agent)
+- update call API to call tools from ai directory
+- implement limits on file manipulation tools
