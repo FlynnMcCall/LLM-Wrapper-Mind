@@ -1,3 +1,26 @@
-- implement file manipulation tools (how will they communicate to the agent)
+- implement file manipulation tools (how will they communicate to the agent?)
 - update call API to call tools from ai directory
 - implement limits on file manipulation tools
+
+
+Notes on file manipulation tools:
+
+
+How am I going to manage subprocessing tools to allow the agent to interface with programs?
+Scripts may take time to run, and may not stop at all. An error in programming may cause an
+AI designed program to run indefinitely - unless the stream is held in parallel, this could
+be fatal to the program and potentially disastrous to the computer.
+
+--Subscription model--
+For each instance, maintain a parallel ouput log. 
+When a subprocess (command) is called starts it subscribes to a log, and writes its outputs there.
+Recent updates to the output log are regularly fed to the instance as User, System or Developer prompts.
+Each subprocess has a timeout.
+This allows one agent to maintain multiple concurrent processes alive.
+Subprocesses die when their agent reports.
+
+It seems pointless to implement security features on the file manipulation system
+I decide to implement. The program has permission to write any text to a file, and so
+could easily write a python script to call os.system to run whatever commands it likes.
+From a security point of view this seems paramount to just inviting an attacker onto your system.
+I'm only going to run this in a virtual machine.

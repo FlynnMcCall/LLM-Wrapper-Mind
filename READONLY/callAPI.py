@@ -39,7 +39,7 @@ def report(messages, tool_call,  tools, instance_id):
     messages.append({
             "role": "tool",
             "tool_call_id": tool_call.id,
-            "content": "Terminated session at " + str(datetime.datetime.now()) + ". Write a final report."
+            "content": "Write a final report."
             })
     try:
         chat_response = chat_completion_request(
