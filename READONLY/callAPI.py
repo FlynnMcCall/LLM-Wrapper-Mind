@@ -39,21 +39,22 @@ def report(messages, tool_call,  tools, instance_id):
     messages.append({
             "role": "tool",
             "tool_call_id": tool_call.id,
-            "content": "Terminated session at " + str(datetime.datetime.now())
+            "content": "Terminated session at " + str(datetime.datetime.now()) + ". Write a final report."
             })
     try:
         chat_response = chat_completion_request(
             messages, tools=tools
         )
+        messages.append({"role": "assistant", "content": chat_response.choices[0].message.content, "tool_calls": tool_calls})
     except:
         print("chat_completion_request error\n")
         return
     final_report_location = "instance_reports/" + instance_id + ".report"
     with open(final_report_location, 'w') as f:
         try:
-            f.write("ID " + instance_id + "\nSelf-terminated session at " + str(datetime.datetime.now()) + "\n\n" + chat_response.choices[0].message["content"])
-        except:
-            f.write("ID " + instance_id + "\nSelf-terminated session at " + str(datetime.datetime.now()) + "\n\n" + "Error, no message provided")
+            f.write("ID " + instance_id + "\nSelf-terminated session at " + str(datetime.datetime.now()) + "\n\n" + chat_response.choices[0].message.content)
+        except Exception as e:
+            f.write("ID " + instance_id + "\nSelf-terminated session at " + str(datetime.datetime.now()) + f"\n\nException: {e}")
         
 
 

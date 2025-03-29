@@ -3,7 +3,7 @@
     "type": "function",
     "function": {
         "name": "report",
-        "description": "Terminates current session. Returns report message to the parent of your current instance.",
+        "description": "Terminates current session. Your final message sent after this will be reported to the parent of your current instance. No tool calls will be processed after this.",
         "parameters": {
             "type": "object",
             "properties": {

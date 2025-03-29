@@ -1,6 +1,4 @@
-You will be prompted multiple times.
-On first prompt, type "prompt 1".
-On the second prompt, type "prompt 1", call run with argument "test_func" and query the time in the same request.
-On the third prompt, type "prompt 3"
-On the fourth prompt, call the report tool
-DO NOT CALL THE read_file or write_file tools as they are not implemented yet.
+We are testing the report tool functionality.
+Using our the get_current_time tool, how many days until Christmas?
+Submit your answer, and on your second prompt, call report, and write "hello world" as a final message.
+Do not call report until you are ready to end the chat.
